@@ -1,9 +1,15 @@
-這是一個小小的實驗，目的是對付有多個邊緣裝置需要同步更新的情況。希望能盡量減低 build 的次數，卻能夠時時更新（畢竟在開發階段）。
+這是一個小小的實驗，目的是對付有多個邊緣裝置需要同步更新的情況。
 
-由於 dockerhub 自動更改 tag 名稱需要付費版。除非每次 upload 新的 image 時都特別去把舊的拉下來改名稱，或是直接覆寫(但顯然這個作法很恐怖)。
-不想要每次改 code 都要重新 build image ，要進去每一台邊緣裝置修改 docker-compose.yml 很麻煩....。
+1. 由於某些原因，使用 `docker swarm` 不實際，且由於在開發階段，希望能盡量減低 build 的次數，卻能夠時時更新。
 
-當然令一個想法是用 docker 官方教學提過得資料卷容器，但這裡偷懶一點：每次開 continer 的時候都先把當前最新的 source code clone 下來。
+2. 使用資料卷(volume) 只能將修改的 source code 掛在當前的機子上，沒辦法擴展到其他機子。
+
+3. dockerhub 自動更改 tag 名稱需要付費版。除非每次 upload 新的 image 時都特別去把舊的拉下來改名稱，或是直接覆寫(但顯然這個作法很恐怖)。
+不想要每次改 code 都要重新 build image ，要進去每一台邊緣裝置修改 docker-compose.yml 很麻煩。
+
+當然另外一個想法是用 docker 官方教學提過得資料卷容器，但這裡偷懶一點：每次開 continer 的時候都先把當前最新的 source code clone 下來。
+
+
 
 ## Dockerfile
 ```Dockerfile
